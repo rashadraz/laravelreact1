@@ -7,10 +7,11 @@ function GuestLayout() {
         return <Navigate to="/" />;
     }
     return (
-        <div>
-            For Guest Users Only
+        
+        <div >
             <Outlet />
         </div>
+       
     );
 }
 export default GuestLayout;
