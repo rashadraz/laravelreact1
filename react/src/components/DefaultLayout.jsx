@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { Link, Navigate, Outlet } from "react-router-dom";
-import axiosClient from "../axios-client";
+import axiosClient from "../axios-client.js";
 import { useStateContext } from "../context/ContextProvider";
 
 function DefaultLayout() {
-    const { user, token, setUser , setToken } = useStateContext();
+    const { user, token, setUser , setToken , notification } = useStateContext();
     if (!token) {
         return <Navigate to="/login" />;
     }
@@ -20,7 +20,7 @@ function DefaultLayout() {
     useEffect(()=>{
         axiosClient.get('/user')
             .then(({data})=> {
-                console.log(data);
+                // console.log(data);
                 setUser(data);
             })
     },[])
@@ -31,6 +31,8 @@ function DefaultLayout() {
                 <Link to="/users">Users</Link>
             </aside>
             <div className="content">
+            {notification &&
+            <div className="notification">{notification}</div>}
                 <header>
                     <div>Header</div>
                     <div>
@@ -40,7 +42,9 @@ function DefaultLayout() {
                         </a>
                     </div>
                 </header>
-                <main></main>
+                <main>
+                    <Outlet/>
+                </main>
             </div>
         </div>
     );
